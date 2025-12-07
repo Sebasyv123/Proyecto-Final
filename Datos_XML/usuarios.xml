@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<users>
+  <user>
+    <id>1001</id>
+    <usuario>sofiae</usuario>
+    <nombre>Sofia Estrada</nombre>
+    <correo>s.estrada@udea.edu.co</correo>
+    <telefono>3205007161</telefono>
+    <contrasena>Sofia10</contrasena>
+  </user>
+  <user>
+    <id>1002</id>
+    <usuario>macelas</usuario>
+    <nombre>Maria Acelas</nombre>
+    <correo>maria.acelas@udea.edu.co</correo>
+    <telefono>3135098762</telefono>
+    <contrasena>M.134</contrasena>
+  </user>
+  <user>
+    <id>1003</id>
+    <usuario>yepess</usuario>
+    <nombre>Sebastián Yepes</nombre>
+    <correo>yeps@udea.edu.co</correo>
+    <telefono>3233398012</telefono>
+    <contrasena>passw0rd</contrasena>
+  </user>
+</users>

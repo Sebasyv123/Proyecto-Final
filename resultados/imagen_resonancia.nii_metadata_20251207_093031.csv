@@ -1,0 +1,7 @@
+Campo,Valor
+PatientID,N/A
+PatientName,N/A
+StudyUID,imagen_resonancia.nii.gz
+StudyDescription,np.bytes_(b'2203.12-dirty 2024-02-01T16:17:47+00:00')
+StudyDate,N/A
+Modality,NIfTI

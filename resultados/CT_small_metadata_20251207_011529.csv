@@ -1,0 +1,7 @@
+Campo,Valor
+PatientID,1CT1
+PatientName,CompressedSamples^CT1
+StudyUID,CT_small.dcm
+StudyDescription,e+1
+StudyDate,20040119
+Modality,CT
