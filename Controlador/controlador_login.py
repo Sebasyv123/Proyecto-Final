@@ -1,45 +1,41 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import cv2
 import os
+from Modelo.database_manager import DatabaseManager
 
-#Clase para el controlador de autenticación y captura
 class ControladorLogin:
     def __init__(self, ventana_login, modelo):
-        #Se guarda la referencia a la ventana y al modelo
         self.ventana_login = ventana_login
         self.ui = ventana_login.ui
         self.modelo = modelo
 
-        #Se inicializa la variable donde se guardará la última captura
-        self.ultima_imagen = None
-
-        #Se oculta el mensaje de error del login
         self.ui.lblmensaje.setVisible(False)
 
-        #Se conectan los botones del login a sus funciones
+        # Conectar botones
         self.ui.btnIngresar.clicked.connect(self.login)
         self.ui.btnSalir.clicked.connect(self.ventana_login.close)
 
-    #LOGIN
     def login(self):
-        #Se obtienen usuario y contraseña escritos en los QLineEdit
         usuario = self.ui.lnputUsuario.text()
         contrasena = self.ui.InputContrasena.text()
 
-        #Se valida el usuario en el modelo
         if self.modelo.validar_usuario(usuario, contrasena):
             self.ui.lblmensaje.setVisible(False)
+        
+            # Crear sesión en la base de datos
+            self.db_historial = DatabaseManager()
+            self.sesion_id = self.db_historial.crear_sesion(usuario)
+        
+            self.usuario_actual = usuario
             self.ventana_login.close()
+            # Abrimos primero captura
             self.abrir_captura(usuario)
+
         else:
-            #Se actualiza el mensaje de advertencia
             self.ui.lblmensaje.setText("Usuario o contraseña incorrecta")
-
-            #Se pone el texto en rojo y negrita
             self.ui.lblmensaje.setStyleSheet("color: red; font-weight: bold;")
-
-            #Se muestra el mensaje
             self.ui.lblmensaje.setVisible(True)
+
 
     #Actualizar stream de cáramara
     def actualizar_stream(self):
@@ -199,14 +195,16 @@ class ControladorLogin:
         self.abrir_dashboard()
     
 
+
     #Abrir dashboard
     def abrir_dashboard(self):
-            # Importamos el controlador del dashboard
-            from Controlador.controlador_dashboard import ControladorDashboard
-
-            self.ventana_dashboard = QtWidgets.QMainWindow()
-            
-            # Conectamos el Controlador a la ventana
-            self.ctrl_dashboard = ControladorDashboard(self.ventana_dashboard)
-
-            self.ventana_dashboard.show()
+        from Controlador.controlador_dashboard import ControladorDashboard
+    
+        self.ventana_dashboard = QtWidgets.QMainWindow()
+        self.ctrl_dashboard = ControladorDashboard(
+            self.ventana_dashboard,
+            usuario=self.usuario_actual,
+            db_historial=self.db_historial,
+            sesion_id=self.sesion_id
+        )
+        self.ventana_dashboard.show()
